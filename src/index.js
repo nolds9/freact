@@ -12,7 +12,22 @@ class Todo extends Freact.Component {
   incrementCount(e) {
     let {count} = this.state
     this.setState({
-      count: count + 1
+      count: count + 1,
+      newTodo: ''
+    })
+  }
+
+  handleChange(e){
+    this.setState({
+      newTodo: e.target.value
+    }, false)
+  }
+
+  handleSubmit(e){
+    e.preventDefault()
+    this.setState({
+      tasks: [...this.state.tasks, this.state.newTodo],
+      newTodo: ''
     })
   }
 
@@ -23,9 +38,12 @@ class Todo extends Freact.Component {
 
     return (
       `<h1>Hello ${this.props.name}</h1>
-        <button click="${ e => this.incrementCount(e) }">${this.state.count}</button>
-        <input type="text" value="${this.state.newTodo}"
+        <button click="${ e => this.incrementCount(e) }">Clicked ${this.state.count} times</button>
 
+        <form submit="${ e=> this.handleSubmit(e) }">
+          <input value="${this.state.newTodo}" type="text" input="${e => this.handleChange(e) }" />
+          <input type="submit" />
+        </form>
         <ul>
           ${items}
         </ul>
